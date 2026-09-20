@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>青しん | 名刺代わりサイト</title>
+  <meta name="description" content="青しん — AI活用に焦りを覚える事務職員">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f1f7f7;
+      --card: #fdfefe;
+      --ink: #1f2933;
+      --muted: #6b7280;
+      --accent: #14a9b1;         /* ターコイズブルー */
+      --accent-strong: #0b8489;  /* 文字・ボタン用の濃いめ */
+      --line: #dcd8cd;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      padding: 64px 48px 56px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: 0 1px 2px rgba(31, 41, 51, .04), 0 24px 48px -24px rgba(31, 41, 51, .18);
+      text-align: center;
+      animation: rise .9s cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    /* 上部のアクセントライン */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      width: 48px; height: 3px;
+      transform: translateX(-50%);
+      background: var(--accent);
+    }
+
+    .avatar {
+      display: block;
+      width: 128px;
+      height: 128px;
+      margin: 0 auto 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 30%;
+      border: 2px solid var(--accent);
+      padding: 4px;
+      background: var(--card);
+    }
+
+    .label {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 13px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-family: "Noto Serif JP", serif;
+      font-weight: 500;
+      font-size: clamp(34px, 9vw, 44px);
+      letter-spacing: .3em;
+      padding-left: .3em; /* letter-spacing の右余白を相殺 */
+      line-height: 1.3;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      margin: 32px auto;
+      background: var(--line);
+    }
+
+    .intro {
+      font-size: 15px;
+      letter-spacing: .12em;
+      color: var(--ink);
+    }
+
+    .link {
+      display: inline-block;
+      margin-top: 48px;
+      padding: 14px 32px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: .2em;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+
+    .link { border-color: var(--accent-strong); color: var(--accent-strong); }
+
+    .link span {
+      display: inline-block;
+      margin-left: 10px;
+      transition: transform .3s;
+    }
+
+    .link:hover,
+    .link:focus-visible {
+      background: var(--accent-strong);
+      border-color: var(--accent-strong);
+      color: #fff;
+      outline: none;
+    }
+
+    .link:hover span,
+    .link:focus-visible span { transform: translateX(4px); }
+
+    .url {
+      margin-top: 16px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 14px;
+      letter-spacing: .08em;
+      color: var(--muted);
+      word-break: break-all;
+    }
+
+    .qr {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .qr-label {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 13px;
+      letter-spacing: .4em;
+      padding-left: .4em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      margin-bottom: 14px;
+    }
+
+    .qr img {
+      display: block;
+      width: 132px;
+      height: 132px;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .qr-note {
+      margin-top: 12px;
+      font-size: 12px;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      body { padding-left: 12px; padding-right: 12px; }
+      .card { padding: 48px 20px 40px; }
+      .avatar { width: 112px; height: 112px; margin-bottom: 22px; }
+      .label { margin-bottom: 20px; }
+      h1 { letter-spacing: .24em; padding-left: .24em; }
+      .divider { height: 32px; margin: 24px auto; }
+      .intro { font-size: 14px; letter-spacing: .06em; }
+      .link { display: block; margin-top: 36px; padding: 16px 12px; }
+      .qr { margin-top: 32px; padding-top: 28px; }
+      .qr img { width: 120px; height: 120px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card { animation: none; }
+      .link, .link span { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="avatar" src="img/watashi.JPG" alt="青しんのプロフィール写真" width="128" height="128">
+    <p class="label">Profile</p>
+    <h1>青しん</h1>
+    <div class="divider" aria-hidden="true"></div>
+    <p class="intro">AI活用に焦りを覚える事務職員</p>
+    <a class="link" href="https://www.shoureikan.jp/g-medico/" target="_blank" rel="noopener noreferrer">
+      サイトを見る<span aria-hidden="true">→</span>
+    </a>
+    <p class="url">shoureikan.jp/g-medico</p>
+    <div class="qr">
+      <p class="qr-label">Scan</p>
+      <img src="img/g-medico_QR.png" alt="https://www.shoureikan.jp/g-medico/ のQRコード" width="132" height="132">
+      <p class="qr-note">QRコードからもアクセスできます</p>
+    </div>
+  </main>
+</body>
+</html>
